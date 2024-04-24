@@ -50,6 +50,13 @@ usuarioSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
 });
 
-const Usuario = mongoose.model('Usuario', usuarioSchema);
+// Comparar contraseña
+usuarioSchema.methods.comprobarPassword = async function (
+    passwordFormulario
+) {
+    return await bcrypt.compare(passwordFormulario, this.password); // El metodo compare de bcrypt retorna "true" o "false"
+};
 
+// Exportacion del Schema
+const Usuario = mongoose.model('Usuario', usuarioSchema);
 export default Usuario;
