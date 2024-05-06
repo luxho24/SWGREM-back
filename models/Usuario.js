@@ -14,6 +14,21 @@ const usuarioSchema = mongoose.Schema(
             required: true,
             trim: true,
         },
+        sex: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        birthdate: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        // phone: {
+        //     type: String,
+        //     required: true,
+        //     trim: true,
+        // },
         email: {
             type: String,
             required: true,

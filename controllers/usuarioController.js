@@ -2,12 +2,18 @@ import Usuario from "../models/Usuario.js";
 import generarJWT from "../helpers/generarJWT.js";
 
 const register = async (req, res) => {
-    const { email } = req.body;
+    const { email, password, confirmPassword } = req.body;
     const existeUsuario = await Usuario.findOne({ email });
 
     // Comprobamos que el usuario exista en la base de datos
     if (existeUsuario) {
         const error = new Error("El usuario ya esta registrado");
+        return res.status(400).json({ msg: error.message });
+    }
+
+    // Comprobamos si las contraseñas coinciden
+    if (password !== confirmPassword) {
+        const error = new Error("Las contraseñas no coinciden");
         return res.status(400).json({ msg: error.message });
     }
 
