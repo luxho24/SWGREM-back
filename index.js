@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import conectarDB from "./config/db.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
+import Cotizacion from './models/Cotizacion.js';
 
 const app = express();
 app.use(express.json())
@@ -25,6 +26,7 @@ app.use(cors(corsOptions));
 
 // Endpoints
 app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/cotizacion", Cotizacion);
 
 const PORT = process.env.PORT || 3000;
 
