@@ -2,21 +2,33 @@ import mongoose from "mongoose";
 
 const cotizacionSchema = mongoose.Schema(
     {
-        brand: {
+        idCotizacion: {
+            type: Number,
+            required: true,
+            trim: true,
+        },
+        detail: {
             type: String,
             required: true,
             trim: true,
         },
-        model: {
+        image: {
             type: String,
             required: true,
             trim: true,
         },
-        consult: {
+        video: {
             type: String,
             required: true,
-            trim: true
-        }
+            trim: true,
+        },
+        imei: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+        },
+       
     },
     {
         timestamps: true,
