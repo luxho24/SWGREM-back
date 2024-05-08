@@ -49,9 +49,14 @@ const login = async (req, res) => {
         }
 
         // Generar token
-        const token = await generarJWT({ id: existeUsuario._id, rol: existeUsuario.rol })
-        res.cookie("token", token);
-        return res.status(200).json({ msg: "Usuario autenticado correctamente" });
+        // const token = await generarJWT({ id: existeUsuario._id, rol: existeUsuario.rol })
+        // res.cookie("token", token);
+        res.json({
+            _id: existeUsuario._id,
+            email: existeUsuario.email,
+            token: generarJWT({ id: existeUsuario._id, rol: existeUsuario.rol }),
+        });
+        // return res.status(200).json({ msg: "Usuario autenticado correctamente" });
 
     } catch (error) {
         return res.status(500).json({ msg: "Hubo un problema" });
