@@ -1,4 +1,4 @@
-import Cotizacion from "../models/Cotizacion";
+import Cotizacion from "../models/Cotizacion.js";
 
 const registerCotizacion = async (req, res) => {
     const { idCotizacion, detail, image, video, imei } = req.body;
