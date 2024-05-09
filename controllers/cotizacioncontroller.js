@@ -9,18 +9,12 @@ const registerCotizacion = async (req, res) => {
         const error = new Error("La cotizacion ya existe");
         return res.status(400).json({ msg: error.message });
     }
-
-    // Comprobamos si las contraseñas coinciden
-    if (password !== confirmPassword) {
-        const error = new Error("Las contraseñas no coinciden");
-        return res.status(400).json({ msg: error.message });
-    }
-
     try {
         // Registrar usuario
         const cotizacion = new Cotizacion(req.body);
-        const cotizacionGuardado = await Cotizacion.save();
+        const cotizacionGuardado = await cotizacion.save();
         console.log("Se registro la cotizacion");
+        return res.status(200).json(cotizacionGuardado);
     } catch (error) {
         return res.status(500).json({ msg: "Hubo un problema" });
     }
