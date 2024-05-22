@@ -28,6 +28,32 @@ const cotizacionSchema = mongoose.Schema(
             unique: true,
             trim: true,
         },
+        cost:{
+            type:Number,
+            required: true,
+            trim: true,
+        },
+        state:{
+            type:String,
+            required: true,
+            trim: true,
+        },marca:{
+            type:String,
+            required: true,
+            trim: true,
+        },modelo:{
+            type:String,
+            required: true,
+            trim: true,
+        },descripcion:{
+            type:String,
+            required: true,
+            trim: true,
+        },precio:{
+            type:number,
+            required: true,
+            trim: true,
+        },
        
     },
     {

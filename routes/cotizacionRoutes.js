@@ -1,8 +1,10 @@
 import { Router } from "express";
 const router = Router();
 
-import { registerCotizacion } from "../controllers/cotizacionController.js";
+import { registerCotizacionVT, modificarCotizacionVU, registerCotizacionVU } from "../controllers/cotizacionController.js";
 
-router.post("/registerCotizacion", registerCotizacion)
+router.post("/registerCotizacionVT", registerCotizacionVT)
+router.post("/registerCotizacionVU", registerCotizacionVU)
+router.post("/modificarCotizacionVU", modificarCotizacionVU)
 
 export default router;
