@@ -1,10 +1,11 @@
 import { Router } from "express";
 const router = Router();
 
-import { registerCotizacionVT, registerCotizacionVU, eliminarCotizacion, modificarCotizacion } from "../controllers/cotizacionController.js";
+import {registerCotizacion, registrarCotizacion, modificarCotizacion, eliminarCotizacion} from "../controllers/cotizacionController.js";
 
-router.post("/registerCotizacionVT", registerCotizacionVT)
-router.post("/registerCotizacionVU", registerCotizacionVU)
-router.post("/modificarCotizacionVU", modificarCotizacion)
-router.post("/eliminarCotizacionVU", eliminarCotizacion)
+router.post("/registerCotizacion", registerCotizacion)
+router.post("/registrarCotizacion", registrarCotizacion)
+router.post("/modificarCotizacion", modificarCotizacion)
+router.post("/eliminarCotizacion", eliminarCotizacion)
+
 export default router;
