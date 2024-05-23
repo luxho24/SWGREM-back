@@ -56,4 +56,3 @@ const modificarCotizacionVU = asyn(req, res) => {
     }
 };
 
-export { registerCotizacionVT, registerCotizacionVU,modificarCotizacionVU};
