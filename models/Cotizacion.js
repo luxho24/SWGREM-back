@@ -50,7 +50,7 @@ const cotizacionSchema = mongoose.Schema(
             required: true,
             trim: true,
         },precio:{
-            type:number,
+            type:Number,
             required: true,
             trim: true,
         },

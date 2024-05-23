@@ -5,7 +5,7 @@ import {registerCotizacion, registrarCotizacion, modificarCotizacion, eliminarCo
 
 router.post("/registerCotizacion", registerCotizacion)
 router.post("/registrarCotizacion", registrarCotizacion)
-router.post("/modificarCotizacion", modificarCotizacion)
-router.post("/eliminarCotizacion", eliminarCotizacion)
+router.put("/modificarCotizacion/:id", modificarCotizacion)
+router.delete("/eliminarCotizacion/:id", eliminarCotizacion)
 
 export default router;

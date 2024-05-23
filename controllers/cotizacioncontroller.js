@@ -40,22 +40,29 @@ const registrarCotizacion = async (req,res) => {
 
     const modificarCotizacion = async (req, res) => {
         const { idCotizacion, marca, modelo, descripcion, precio } = req.body;
-        const existeCotizacion = await Cotizacion.findOne({ idCotizacion });
+        const {id} = req.params;
+        const cotizar = await Cotizacion.findById( id );
 
-        if (!existeCotizacion) {
+        if (!cotizar) {
             const error = new Error("La cotización no existe");
             return res.status(404).json({ msg: error.message });
         }
-
+        cotizar.idCotizacion = req.body.idCotizacion || cotizar.idCotizacion
+        cotizar.detail = req.body.detail || cotizar.detail
+        cotizar.image = req.body.image || cotizar.image
+        cotizar.video = req.body.video || cotizar.video
+        cotizar.imei = req.body.imei || cotizar.imei
+        cotizar.cost = req.body.cost || cotizar.cost
+        cotizar.state = req.body.state || cotizar.state
+        cotizar.marca = req.body.marca || cotizar.marca
+        cotizar.modelo = req.body.modelo || cotizar.modelo
+        cotizar.descripcion = req.body.descripcion || cotizar.descripcion
+        cotizar.precio = req.body.precio || cotizar.precio
+        
         try {
-            existeCotizacion.marca = marca;
-            existeCotizacion.modelo = modelo;
-            existeCotizacion.descripcion = descripcion;
-            existeCotizacion.precio = precio;
-
-            const cotizacionGuardada = await existeCotizacion.save();
+            const cotizacionActualizada = await cotizar.save();
             console.log("Se modificó la cotización");
-            return res.status(200).json(cotizacionGuardada);
+            return res.status(200).json(cotizacionActualizada);
         }catch (error) {
             return res.status(500).json({ msg: "Hubo un problema al modificar la cotización" });
         }
@@ -63,17 +70,18 @@ const registrarCotizacion = async (req,res) => {
 
 const eliminarCotizacion = async (req, res) => {
     const { idCotizacion, marca, modelo, descripcion, precio } = req.body;
-    const existeCotizacion = await Cotizacion.findOne({ idCotizacion });
+    const {id} = req.params;
+    const coti = await Cotizacion.findById( id );
 
     // Comprobamos que la cotización exista en la base de datos
-    if (!existeCotizacion) {
+    if (!coti) {
         const error = new Error("La cotización no existe");
         return res.status(404).json({ msg: error.message });
     }
 
     try {
         // Eliminar la cotización
-        await existeCotizacion.remove();
+        await coti.deleteOne();
         console.log("Se eliminó la cotización");
         return res.status(200).json({ msg: "Cotización eliminada exitosamente" });
     } catch (error) {
