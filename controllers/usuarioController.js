@@ -1,5 +1,6 @@
 import Usuario from "../models/Usuario.js";
 import generarJWT from "../helpers/generarJWT.js";
+import jwt from 'jsonwebtoken';
 
 const register = async (req, res) => {
     const { email, password, confirmPassword } = req.body;
@@ -41,7 +42,7 @@ const login = async (req, res) => {
         return res.status(400).json({ msg: error.message });
     }
 
-    try {
+    // try {
         // Revisar password
         if (await !existeUsuario.comprobarPassword(password)) {
             const error = new Error("La contraseña es incorrecta")
@@ -54,13 +55,32 @@ const login = async (req, res) => {
         res.json({
             _id: existeUsuario._id,
             email: existeUsuario.email,
-            token: generarJWT({ id: existeUsuario._id, rol: existeUsuario.rol }),
+            token: generarJWT( existeUsuario._id, existeUsuario.rol),
         });
         // return res.status(200).json({ msg: "Usuario autenticado correctamente" });
 
-    } catch (error) {
-        return res.status(500).json({ msg: "Hubo un problema" });
+    // } catch (error) {
+    //     return res.status(500).json({ msg: "Hubo un problema" });
+    // }
+};
+
+const perfil = (req, res) => {
+    const { usuario } = req;
+    // res.json({ perfil: usuario });
+    res.json("usuario");
+};
+
+const verificarToken = async (req, res) => {
+    const { token } = req.params;
+    const tokenValido = await Usuario.findOne({ token });
+
+    if (tokenValido) {
+        // El token es valido el usuario existe
+        res.json({ msg: "Token válido y el usuario existe" });
+    } else {
+        const error = new Error("Token no válido");
+        return res.status(400).json({ msg: error.message });
     }
 };
 
-export { register, login };
+export { register, login, perfil, verificarToken };
