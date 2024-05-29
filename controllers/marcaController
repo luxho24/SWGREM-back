@@ -1,59 +1,59 @@
-import Equipo from '../models/Marca.js';
+import Marca from '../models/marca.js';
 
-// Obtener todos los equipos
-export const obtenerEquipos = async (req, res) => {
+// Obtener todas las marcas
+export const obtenerMarcas = async (req, res) => {
   try {
-    const equipos = await Equipo.find();
-    res.json(equipos);
+    const marcas = await Marca.find();
+    res.json(marcas);
   } catch (err) {
-    res.status(500).json({ error: 'Error al obtener los equipos' });
+    res.status(500).json({ error: 'Error al obtener las marcas' });
   }
 };
 
-// Registrar un nuevo equipo
-export const registrarEquipo = async (req, res) => {
-  const { marca, modelo, descripcion } = req.body;
-  const nuevoEquipo = new Equipo({ marca, modelo, descripcion });
+// Registrar una nueva marca
+export const registrarMarca = async (req, res) => {
+  const { nombre, descripcion } = req.body;
+  const nuevaMarca = new Marca({ nombre, descripcion });
 
   try {
-    await nuevoEquipo.save();
-    res.status(201).json(nuevoEquipo);
+    await nuevaMarca.save();
+    res.status(201).json(nuevaMarca);
   } catch (err) {
-    res.status(400).json({ error: 'Error al registrar el equipo' });
+    res.status(400).json({ error: 'Error al registrar la marca' });
   }
 };
 
-// Modificar un equipo
-export const modificarEquipo = async (req, res) => {
+// Modificar una marca
+export const modificarMarca = async (req, res) => {
   const { id } = req.params;
-  const { marca, modelo, descripcion } = req.body;
+  const { nombre, descripcion } = req.body;
 
   try {
-    const equipoActualizado = await Equipo.findByIdAndUpdate(id, { marca, modelo, descripcion }, { new: true });
-    res.json(equipoActualizado);
+    const marcaActualizada = await Marca.findByIdAndUpdate(id, { nombre, descripcion }, { new: true });
+    res.json(marcaActualizada);
   } catch (err) {
-    res.status(400).json({ error: 'Error al modificar el equipo' });
+    res.status(400).json({ error: 'Error al modificar la marca' });
   }
 };
 
-// Eliminar un equipo
-export const eliminarEquipo = async (req, res) => {
+// Eliminar una marca
+export const eliminarMarca = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await Equipo.findByIdAndDelete(id);
-    res.json({ message: 'Equipo eliminado' });
+    await Marca.findByIdAndDelete(id);
+    res.json({ message: 'Marca eliminada' });
   } catch (err) {
-    res.status(400).json({ error: 'Error al eliminar el equipo' });
+    res.status(400).json({ error: 'Error al eliminar la marca' });
   }
 };
 
-// Eliminar todos los equipos
-export const eliminarTodosLosEquipos = async (req, res) => {
+// Eliminar todas las marcas
+export const eliminarTodasLasMarcas = async (req, res) => {
   try {
-    await Equipo.deleteMany();
-    res.json({ message: 'Todos los equipos han sido eliminados' });
+    await Marca.deleteMany();
+    res.json({ message: 'Todas las marcas han sido eliminadas' });
   } catch (err) {
-    res.status(400).json({ error: 'Error al eliminar todos los equipos' });
+    res.status(400).json({ error: 'Error al eliminar todas las marcas' });
   }
 };

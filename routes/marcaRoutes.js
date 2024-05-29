@@ -1,26 +1,26 @@
 import express from 'express';
 const router = express.Router();
 import {
-  obtenerEquipos,
-  registrarEquipo,
-  modificarEquipo,
-  eliminarEquipo,
-  eliminarTodosLosEquipos
-} from '../controllers/equipoController.js';
+  obtenerMarcas,
+  registrarMarca,
+  modificarMarca,
+  eliminarMarca,
+  eliminarTodasLasMarcas
+} from '../controllers/marcaController.js';
 
-// Obtener todos los equipos
-router.get('/', obtenerEquipos);
+// Obtener todas las marcas
+router.get('/', obtenerMarcas);
 
-// Registrar un nuevo equipo
-router.post('/', registrarEquipo);
+// Registrar una nueva marca
+router.post('/', registrarMarca);
 
-// Modificar un equipo
-router.put('/:id', modificarEquipo);
+// Modificar una marca
+router.put('/:id', modificarMarca);
 
-// Eliminar un equipo
-router.delete('/:id', eliminarEquipo);
+// Eliminar una marca
+router.delete('/:id', eliminarMarca);
 
-// Eliminar todos los equipos
-router.delete('/', eliminarTodosLosEquipos);
+// Eliminar todas las marcas
+router.delete('/', eliminarTodasLasMarcas);
 
 export default router;

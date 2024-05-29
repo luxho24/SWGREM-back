@@ -1,11 +1,7 @@
 import mongoose from 'mongoose';
 
-const equipoSchema = new mongoose.Schema({
-  marca: {
-    type: String,
-    required: true
-  },
-  modelo: {
+const marcaSchema = new mongoose.Schema({
+  nombre: {
     type: String,
     required: true
   },
@@ -15,6 +11,6 @@ const equipoSchema = new mongoose.Schema({
   }
 });
 
-const Equipo = mongoose.model('Equipo', equipoSchema);
+const Marca = mongoose.model('Marca', marcaSchema);
 
-export default Equipo;
+export default Marca;
