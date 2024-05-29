@@ -1,0 +1,59 @@
+import Equipo from '../models/Marca.js';
+
+// Obtener todos los equipos
+export const obtenerEquipos = async (req, res) => {
+  try {
+    const equipos = await Equipo.find();
+    res.json(equipos);
+  } catch (err) {
+    res.status(500).json({ error: 'Error al obtener los equipos' });
+  }
+};
+
+// Registrar un nuevo equipo
+export const registrarEquipo = async (req, res) => {
+  const { marca, modelo, descripcion } = req.body;
+  const nuevoEquipo = new Equipo({ marca, modelo, descripcion });
+
+  try {
+    await nuevoEquipo.save();
+    res.status(201).json(nuevoEquipo);
+  } catch (err) {
+    res.status(400).json({ error: 'Error al registrar el equipo' });
+  }
+};
+
+// Modificar un equipo
+export const modificarEquipo = async (req, res) => {
+  const { id } = req.params;
+  const { marca, modelo, descripcion } = req.body;
+
+  try {
+    const equipoActualizado = await Equipo.findByIdAndUpdate(id, { marca, modelo, descripcion }, { new: true });
+    res.json(equipoActualizado);
+  } catch (err) {
+    res.status(400).json({ error: 'Error al modificar el equipo' });
+  }
+};
+
+// Eliminar un equipo
+export const eliminarEquipo = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Equipo.findByIdAndDelete(id);
+    res.json({ message: 'Equipo eliminado' });
+  } catch (err) {
+    res.status(400).json({ error: 'Error al eliminar el equipo' });
+  }
+};
+
+// Eliminar todos los equipos
+export const eliminarTodosLosEquipos = async (req, res) => {
+  try {
+    await Equipo.deleteMany();
+    res.json({ message: 'Todos los equipos han sido eliminados' });
+  } catch (err) {
+    res.status(400).json({ error: 'Error al eliminar todos los equipos' });
+  }
+};
