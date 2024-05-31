@@ -3,8 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import conectarDB from './config/db.js';
 import usuarioRoutes from './routes/usuarioRoutes.js';
-// import cotizacionRoutes from './routes/cotizacionRoutes.js';  // Comentado para desactivar cotizaciones
-import marcaRoutes from './routes/marcaRoutes.js';  // Asegúrate de importar las rutas de marcas
+import marcaRoutes from './routes/marcaRoutes.js';
 
 const app = express();
 app.use(express.json());
@@ -26,7 +25,6 @@ app.use(cors(corsOptions));
 
 // Endpoints
 app.use('/api/usuarios', usuarioRoutes);
-// app.use('/api/cotizaciones', cotizacionRoutes);  // Comentar esta línea para desactivar la ruta de cotizaciones
 app.use('/api/marcas', marcaRoutes);  // Registrar la ruta de marcas
 
 const PORT = process.env.PORT || 3000;
