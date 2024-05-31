@@ -1,59 +1,32 @@
-import Marca from '../models/marca.js';
+export const registrarMarca = (req, res) => {
+  const { marca, modelo, descripcion } = req.body;
 
-// Obtener todas las marcas
-export const obtenerMarcas = async (req, res) => {
-  try {
-    const marcas = await Marca.find();
-    res.json(marcas);
-  } catch (err) {
-    res.status(500).json({ error: 'Error al obtener las marcas' });
+  // Verificar que todos los campos están presentes
+  if (!marca || !modelo || !descripcion) {
+      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
+
+  // Aquí manejas la lógica para almacenar los datos recibidos
+  // Ejemplo: Guardar en la base de datos
+  // const nuevaMarca = new Marca({ marca, modelo, descripcion });
+  // nuevaMarca.save();
+
+  res.json({ message: 'Datos de la marca recibidos correctamente' });
 };
 
-// Registrar una nueva marca
-export const registrarMarca = async (req, res) => {
-  const { nombre, descripcion } = req.body;
-  const nuevaMarca = new Marca({ nombre, descripcion });
-
-  try {
-    await nuevaMarca.save();
-    res.status(201).json(nuevaMarca);
-  } catch (err) {
-    res.status(400).json({ error: 'Error al registrar la marca' });
-  }
+// Implementa las otras funciones según sea necesario
+export const obtenerMarcas = (req, res) => {
+  // Lógica para obtener todas las marcas
 };
 
-// Modificar una marca
-export const modificarMarca = async (req, res) => {
-  const { id } = req.params;
-  const { nombre, descripcion } = req.body;
-
-  try {
-    const marcaActualizada = await Marca.findByIdAndUpdate(id, { nombre, descripcion }, { new: true });
-    res.json(marcaActualizada);
-  } catch (err) {
-    res.status(400).json({ error: 'Error al modificar la marca' });
-  }
+export const modificarMarca = (req, res) => {
+  // Lógica para modificar una marca
 };
 
-// Eliminar una marca
-export const eliminarMarca = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    await Marca.findByIdAndDelete(id);
-    res.json({ message: 'Marca eliminada' });
-  } catch (err) {
-    res.status(400).json({ error: 'Error al eliminar la marca' });
-  }
+export const eliminarMarca = (req, res) => {
+  // Lógica para eliminar una marca
 };
 
-// Eliminar todas las marcas
-export const eliminarTodasLasMarcas = async (req, res) => {
-  try {
-    await Marca.deleteMany();
-    res.json({ message: 'Todas las marcas han sido eliminadas' });
-  } catch (err) {
-    res.status(400).json({ error: 'Error al eliminar todas las marcas' });
-  }
+export const eliminarTodasLasMarcas = (req, res) => {
+  // Lógica para eliminar todas las marcas
 };

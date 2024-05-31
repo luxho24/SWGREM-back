@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 
 const marcaSchema = new mongoose.Schema({
-  nombre: {
+  marca: {
+    type: String,
+    required: true
+  },
+  modelo: {
     type: String,
     required: true
   },
@@ -13,20 +17,6 @@ const marcaSchema = new mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now
-  },
-  sitioWeb: {
-    type: String,
-    required: false
-  },
-  contacto: {
-    email: {
-      type: String,
-      required: true
-    },
-    telefono: {
-      type: String,
-      required: false
-    }
   }
 });
 
