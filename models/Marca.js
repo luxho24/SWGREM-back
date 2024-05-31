@@ -8,6 +8,25 @@ const marcaSchema = new mongoose.Schema({
   descripcion: {
     type: String,
     required: true
+  },
+  fechaCreacion: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
+  sitioWeb: {
+    type: String,
+    required: false
+  },
+  contacto: {
+    email: {
+      type: String,
+      required: true
+    },
+    telefono: {
+      type: String,
+      required: false
+    }
   }
 });
 

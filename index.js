@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import conectarDB from './config/db.js';
 import usuarioRoutes from './routes/usuarioRoutes.js';
-//import cotizacionRoutes from './routes/cotizacionRoutes.js';  // Importación de cotizacionRoutes
-import marcaRoutes from './routes/marcaRoutes.js';  // Importación de brandRoutes
+// import cotizacionRoutes from './routes/cotizacionRoutes.js';  // Comentado para desactivar cotizaciones
+import marcaRoutes from './routes/marcaRoutes.js';  // Asegúrate de importar las rutas de marcas
 
 const app = express();
 app.use(express.json());
