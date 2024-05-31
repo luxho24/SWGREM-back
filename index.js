@@ -3,24 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import conectarDB from './config/db.js';
 import usuarioRoutes from './routes/usuarioRoutes.js';
-<<<<<<< Updated upstream
-import marcaRoutes from './routes/marcaRoutes.js'; // Importa las rutas de marcas
-
-dotenv.config();
-
-const app = express();
-app.use(express.json());
-conectarDB();
-
-// Permitir todas las solicitudes CORS
-app.use(cors());
-
-// Endpoints
-app.use('/api/usuarios', usuarioRoutes);
-app.use('/api/marcas', marcaRoutes); // Añadimos el endpoint para las marcas
-=======
-import cotizacionRoutes from './routes/cotizacionRoutes.js';
-import brandRoutes from './routes/brandRoutes.js';
+//import cotizacionRoutes from './routes/cotizacionRoutes.js';  // Importación de cotizacionRoutes
+import marcaRoutes from './routes/marcaRoutes.js';  // Importación de brandRoutes
 
 const app = express();
 app.use(express.json());
@@ -31,7 +15,6 @@ const dominiosPermitidos = [process.env.FRONTEND_URL];
 const corsOptions = {
     origin: function (origin, callback) {
         if (dominiosPermitidos.indexOf(origin) !== -1 || !origin) {
-            // El origen del Request está permitido
             callback(null, true);
         } else {
             callback(new Error('No permitido por CORS'));
@@ -43,9 +26,8 @@ app.use(cors(corsOptions));
 
 // Endpoints
 app.use('/api/usuarios', usuarioRoutes);
-app.use('/api/cotizaciones', cotizacionRoutes);
-app.use('/api/brands', brandRoutes);
->>>>>>> Stashed changes
+// app.use('/api/cotizaciones', cotizacionRoutes);  // Comentar esta línea para desactivar la ruta de cotizaciones
+app.use('/api/marcas', marcaRoutes);  // Registrar la ruta de marcas
 
 const PORT = process.env.PORT || 3000;
 
