@@ -1,7 +1,6 @@
 import Cotizacion from "../models/Cotizacion.js";
 
 const registerCotizacion = async (req, res) => {
-    const { idCotizacion, detail, image, video, imei } = req.body;
     const existeCotizacion = await Cotizacion.findOne({ idCotizacion });
 
     // Comprobamos que el cotizacion exista en la base de datos
