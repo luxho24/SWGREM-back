@@ -1,27 +1,25 @@
 import Cotizacion from "../models/Cotizacion.js";
 
 const registerCotizacion = async (req, res) => {
-    const { idCotizacion, detail, image, video, imei } = req.body;
+    const { idCotizacion} = req.body;
     const existeCotizacion = await Cotizacion.findOne({ idCotizacion });
 
-    // Comprobamos que el usuario exista en la base de datos
+    // Comprobamos que el cotizacion exista en la base de datos
     if (existeCotizacion) {
         const error = new Error("La cotizacion ya existe");
         return res.status(400).json({ msg: error.message });
     }
     try {
-        // Registrar usuario
         const cotizacion = new Cotizacion(req.body);
         const cotizacionGuardado = await cotizacion.save();
         console.log("Se registro la cotizacion");
         return res.status(200).json(cotizacionGuardado);
     } catch (error) {
-        return res.status(500).json({ msg: "Hubo un problema" });
-    } 
-
+        return res.status(500).json({ msg: "Hubo un problema" });
+    }
 };
 const modificarCotizacion = async (req, res) => {
-    const { idCotizacion, marca, modelo, descripcion, precio } = req.body;
+    const { idCotizacion} = req.body;
     const{ id }=req.params;
     const Cotizar = await Cotizacion.findlyid( id );
 
@@ -53,7 +51,7 @@ const modificarCotizacion = async (req, res) => {
 };
 
     const registrarCotizacion = async (req, res) => {
-        const { idCotizacion, marca, modelo, descripcion, precio } = req.body;
+
         const Cotizar = await Cotizacion.findlyid({ id });
     
         // Comprobamos que la cotización no exista en la base de datos
@@ -75,7 +73,7 @@ const modificarCotizacion = async (req, res) => {
     
     
 const eliminarCotizacion = async (req, res) => {
-    const { idCotizacion, marca, modelo, descripcion, precio } = req.body;
+   
     const{ id }=req.params;
     const Cotizar = await Cotizacion.findlyid( id );
 
@@ -94,4 +92,23 @@ const eliminarCotizacion = async (req, res) => {
         return res.status(500).json({ msg: "Hubo un problema al eliminar la cotización" });
     }
 };
-export { registerCotizacion, modificarCotizacion,registrarCotizacion,eliminarCotizacion };
+
+
+const listadoCotizacion = async (req, res) => {
+    const { id } = req.params;
+ 
+ try {
+     const Cotizar = await Cotizacion.findById(id);
+     // Comprobamos que la cotización exista en la base de datos
+     if (!Cotizar) {
+         const error = new Error("La cotización no existe");
+         return res.status(404).json({ msg: error.message });
+     }
+     // Actualizar listado si es necesario
+     return res.status(200).json( Cotizar );
+ } catch (error) {
+     return res.status(500).json({ msg: "Hubo un problema al eliminar la cotización" });
+ }
+};
+
+export { registerCotizacion, modificarCotizacion,registrarCotizacion,eliminarCotizacion,listadoCotizacion};
