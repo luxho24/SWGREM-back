@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import express from 'express';
 const router = express.Router();
 import { registrarMarca, obtenerMarcas, modificarMarca, eliminarMarca, eliminarTodasLasMarcas } from '../controllers/marcaController.js';
@@ -7,5 +8,15 @@ router.get('/', obtenerMarcas);    // Ruta para obtener todas las marcas
 router.put('/:id', modificarMarca); // Ruta para modificar una marca
 router.delete('/:id', eliminarMarca); // Ruta para eliminar una marca
 router.delete('/', eliminarTodasLasMarcas); // Ruta para eliminar todas las marcas
+=======
+import { Router } from "express";
+const router = Router();
+
+import { register, getCotizaciones } from "../controllers/marcaController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
+
+router.post("/register", register)
+router.get("/getCotizaciones", authMiddleware, getCotizaciones);
+>>>>>>> Stashed changes
 
 export default router;
