@@ -1,21 +1,36 @@
-const express = require('express');
-const router = express.Router();
+import Marca from "../models/Marca.js";
 
-// Recibir los datos del equipo desde brand-dashboard.jsx
-router.post('/marcas', (req, res) => {
+const registrarEquipo = async (req, res) => {
     const { marca, modelo, descripcion } = req.body;
 
-    // Aquí puedes manejar los datos recibidos, por ejemplo, guardándolos en una base de datos.
-    // Por ahora, solo los devolveremos en la respuesta.
+    try {
+        const nuevoEquipo = new Equipo({ marca, modelo, descripcion });
+        const equipoGuardado = await nuevoEquipo.save();
+        return res.status(200).json(equipoGuardado);
+    } catch (error) {
+        return res.status(500).json({ msg: "Hubo un problema" });
+    }
+}
 
-    res.json({
-        status: 'success',
-        data: {
-            marca,
-            modelo,
-            descripcion
-        }
-    });
-});
+const getEquipos = async (req, res) => {
+    const equipos = await Equipo.find();
+    return res.status(200).json(equipos);
+}
 
-module.exports = router;
+const getEquipoById = async (req, res) => {
+    const equipo = await Equipo.findById(req.params.id);
+    return res.status(200).json(equipo);
+}
+
+const actualizarEquipo = async (req, res) => {
+    const { marca, modelo, descripcion } = req.body;
+    const equipo = await Equipo.findByIdAndUpdate(req.params.id, { marca, modelo, descripcion }, { new: true });
+    return res.status(200).json(equipo);
+}
+
+const eliminarEquipo = async (req, res) => {
+    await Equipo.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ msg: "Equipo eliminado" });
+}
+
+export { registrarEquipo, getEquipos, getEquipoById, actualizarEquipo, eliminarEquipo };

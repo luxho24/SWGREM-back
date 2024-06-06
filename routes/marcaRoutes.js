@@ -1,30 +1,32 @@
-const express = require('express');
-const router = express.Router();
-const Marca = require('../models/Marca');
+import { Router } from "express";
+const router = Router();
 
-// POST request para crear una nueva marca
-router.post('/marcas', async (req, res) => {
-    const { marca, modelo, descripcion } = req.body;
+import {
+    registrarEquipo,
+    obtenerEquipos,
+    obtenerEquipoPorId,
+    actualizarEquipo,
+    eliminarEquipo,
+    eliminarTodosLosEquipos
+} from "../controllers/marcaController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
-    try {
-        const nuevaMarca = new Marca({
-            marca,
-            modelo,
-            descripcion
-        });
+// Ruta para registrar un nuevo equipo
+router.post("/registrar", registrarEquipo);
 
-        const marcaGuardada = await nuevaMarca.save();
+// Ruta para obtener todos los equipos registrados
+router.get("/equipos", authMiddleware, obtenerEquipos);
 
-        res.json({
-            status: 'success',
-            data: marcaGuardada
-        });
-    } catch (error) {
-        res.status(500).json({
-            status: 'error',
-            message: error.message
-        });
-    }
-});
+// Ruta para obtener un equipo por su ID
+router.get("/equipos/:id", authMiddleware, obtenerEquipoPorId);
 
-module.exports = router;
+// Ruta para actualizar un equipo existente
+router.put("/equipos/:id", authMiddleware, actualizarEquipo);
+
+// Ruta para eliminar un equipo
+router.delete("/equipos/:id", authMiddleware, eliminarEquipo);
+
+// Ruta para eliminar todos los equipos registrados
+router.delete("/equipos", authMiddleware, eliminarTodosLosEquipos);
+
+export default router;
