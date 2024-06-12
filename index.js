@@ -27,6 +27,7 @@ conectarDB();
 // Endpoints
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/cotizaciones", cotizacionRoutes);
+app.use("/api/carritocompra", carritoRoutes);
 
 const PORT = process.env.PORT || 3000;
 

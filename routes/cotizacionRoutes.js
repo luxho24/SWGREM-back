@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import {registerCotizacion, modificarCotizacion, eliminarCotizacion, listadoCotizacion} from "../controllers/cotizacionController.js";
+import {registerCotizacion, modificarCotizacion, eliminarCotizacion, listadoCotizacion, carritoDeCompras} from "../controllers/cotizacionController.js";
 
 router.post("/registerCotizacion", registerCotizacion)
 router.put("/modificarCotizacion/:id", modificarCotizacion)
