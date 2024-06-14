@@ -41,6 +41,18 @@ const cotizacionSchema = mongoose.Schema(
             required: true,
             trim: true,
         },
+
+        //no hacer caso todavia
+        photo: {
+            data: Buffer,
+            contentType: String,
+            required: false
+        },
+        video: {
+            data: Buffer,
+            contentType: String,
+            required: false
+        }
     },
     {
         timestamps: true,
