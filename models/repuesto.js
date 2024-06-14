@@ -1,44 +1,16 @@
 import mongoose from "mongoose";
+// models/Repuesto.js
 
-const repuestoSchema = mongoose.Schema(
-    {
-        idRepuesto: {
-            type: Number,
-            required: true,
-            trim: true,
-        },
-        descripcion: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        precio: {
-            type: Number,
-            required: true,
-            trim: true,
-        },
-        cantidad: {
-            type: Number,
-            required: true,
-            trim: true,
-        },
-        marca: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        modelo: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-    },
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-    {
-        timestamps: true,
-    }
-)
+const RepuestoSchema = new Schema({
+    idProducto: { type: String, required: true, unique: true },
+    descripcion: { type: String, required: true },
+    precio: { type: Number, required: true },
+    cantidad: { type: Number, required: true },
+    idMarca: { type: String, required: true },
+    modelo: { type: String, required: true }
+});
 
-// Exportacion del Schema
-const Repuesto = mongoose.model('Repuesto', repuestoSchema);
-export default Repuesto;
+module.exports = mongoose.model('Repuesto', RepuestoSchema);
