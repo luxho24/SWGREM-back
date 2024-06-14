@@ -1,8 +1,8 @@
-// controllers/repuestosController.js
+// controllers/repuestoController.js
 
-const Repuesto = require('../models/Repuesto.js');
+import Repuesto from "../models/Repuesto.js";
 
-exports.getAllRepuestos = async (req, res) => {
+const getAllRepuestos = async (req, res) => {
     try {
         const repuestos = await Repuesto.find();
         res.status(200).json(repuestos);
@@ -11,7 +11,7 @@ exports.getAllRepuestos = async (req, res) => {
     }
 };
 
-exports.createRepuesto = async (req, res) => {
+const createRepuesto = async (req, res) => {
     const { idProducto, descripcion, precio, cantidad, idMarca, modelo } = req.body;
 
     const newRepuesto = new Repuesto({
@@ -31,7 +31,7 @@ exports.createRepuesto = async (req, res) => {
     }
 };
 
-exports.updateRepuesto = async (req, res) => {
+const updateRepuesto = async (req, res) => {
     const { idProducto } = req.params;
     const { descripcion, precio, cantidad, idMarca, modelo } = req.body;
 
@@ -47,7 +47,7 @@ exports.updateRepuesto = async (req, res) => {
     }
 };
 
-exports.deleteRepuesto = async (req, res) => {
+const deleteRepuesto = async (req, res) => {
     const { idProducto } = req.params;
 
     try {
@@ -56,4 +56,11 @@ exports.deleteRepuesto = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+};
+
+export {
+    getAllRepuestos,
+    createRepuesto,
+    updateRepuesto,
+    deleteRepuesto
 };

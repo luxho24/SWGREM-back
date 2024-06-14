@@ -1,17 +1,18 @@
-// routes/repuestosRoutes.js
+// routes/repuestoRoutes.js
 
-const express = require('express');
-const router = express.Router();
-const {
+import express from 'express';
+import {
     getAllRepuestos,
     createRepuesto,
     updateRepuesto,
     deleteRepuesto
-} = require('../controllers/repuestosController');
+} from '../controllers/repuestoController.js';
+
+const router = express.Router();
 
 router.get('/', getAllRepuestos);
 router.post('/', createRepuesto);
 router.put('/:idProducto', updateRepuesto);
 router.delete('/:idProducto', deleteRepuesto);
 
-module.exports = router;
+export default router;
