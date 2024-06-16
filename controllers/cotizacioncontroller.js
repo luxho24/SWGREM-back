@@ -93,7 +93,7 @@ const eliminarCotizacion = async (req, res) => {
     }
 };
 
-
+//lista de cotizacion
 const listadoCotizacion = async (req, res) => {
     const { id } = req.params;
  
@@ -111,4 +111,22 @@ const listadoCotizacion = async (req, res) => {
  }
 };
 
-export { registerCotizacion, modificarCotizacion,registrarCotizacion,eliminarCotizacion,listadoCotizacion};
+//de carrito de compras
+const CarritoDeCompras = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const Carrito = await CarritoDeCompras.findById(id);
+        // Comprobamos que el carrito de compras exista en la base de datos
+        if (!Carrito) {
+            const error = new Error("El carrito de compras no existe");
+            return res.status(404).json({ msg: error.message });
+        }
+        // Devolver el carrito de compras encontrado
+        return res.status(200).json(Carrito);
+    } catch (error) {
+        return res.status(500).json({ msg: "Hubo un problema al obtener el carrito de compras" });
+    }
+};
+
+export { registerCotizacion, modificarCotizacion,registrarCotizacion,eliminarCotizacion,listadoCotizacion,CarritoDeCompras};
