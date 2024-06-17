@@ -1,14 +1,51 @@
 import Cotizacion from "../models/Cotizacion.js";
 
 const register = async (req, res) => {
-    const cotizacion = new Cotizacion(req.body);
-    try {
-        const cotizacionGuardada = await cotizacion.save();
-        return res.status(200).json(cotizacionGuardada);
-    } catch (error) {
-        return res.status(500).json({ msg: "Hubo un problema" });
+    const cotizacionData = req.body;
+    
+    if (req.filePhoto) {
+        const photoFile = req.filePhoto;
+        const photoName = `photos/${Date.now()}_${photoFile.originalname}`;
+        const blob = bucket.file(photoName);
+
+        const blobStream = blob.createWriteStream({
+            resumable: false,
+            metadata: {
+                contentType: photoFile.mimetype
+            }
+        });
+
+        blobStream.on('error', (err) => {
+            console.error(err);
+            return res.status(500).json({ error: 'Error uploading photo' });
+        });
+
+        blobStream.on('finish', async () => {
+            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${photoName}`;
+            cotizacionData.photoUrl = publicUrl;
+
+            try {
+                const cotizacion = new Cotizacion(cotizacionData);
+                const cotizacionGuardada = await cotizacion.save();
+                return res.status(200).json(cotizacionGuardada);
+            } catch (error) {
+                console.error(error);
+                return res.status(500).json({ error: 'Error saving cotizacion' });
+            }
+        });
+
+        blobStream.end(photoFile.buffer);
+    } else {
+        try {
+            const cotizacion = new Cotizacion(cotizacionData);
+            const cotizacionGuardada = await cotizacion.save();
+            return res.status(200).json(cotizacionGuardada);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Error saving cotizacion' });
+        }
     }
-}
+};
 
 const getCotizaciones = async (req, res) => {
     const cotizaciones = await Cotizacion.find();
