@@ -1,18 +1,22 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-const MarcaSchema = new mongoose.Schema({
+const marcaSchema = mongoose.Schema({
     marca: {
         type: String,
-        required: true
+        required: true,
     },
     modelo: {
         type: String,
-        required: true
+        required: true,
     },
     descripcion: {
         type: String,
-        required: true
+        required: true,
     }
+}, {
+    timestamps: true
 });
 
-module.exports = mongoose.model('Marca', MarcaSchema);
+const Marca = mongoose.model('Marca', marcaSchema);
+
+export default Marca;
