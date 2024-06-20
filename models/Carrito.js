@@ -1,37 +1,38 @@
 import mongoose from "mongoose";
 
-const piezasSchema = mongoose.Schema(
+const carritoSchema = moongose.Schema(
     {
-        idRepuesto:{
+        idProduct:{
             type: Number,
             required: true,
             trim: true,
         },
-        descripcionRep:{
-            type: String,
-            required: true,
-            trim: true,
-        },
-        precioRep:{
+        nameProduct:{
             type: Number,
             required: true,
             trim: true,
         },
-        cantidadRep:{
+        description:{
             type: Number,
             required: true,
             trim: true,
         },
-        idMarca:{
+        quantity:{
+            type: Number,
+            required: true,
+            trim: true,
+        },
+        price:{
             type: Number,
             required: true,
             trim: true,
         }
+
     },
     {
         timestamps: true,
     }
 )
 
-const Piezas = mongoose.model('Piezas', piezasSchema);
-export default Piezas;
+const Carrito = mongoose.model('Carrito', carritoSchema);
+export default Carrito;
