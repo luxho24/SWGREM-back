@@ -3,18 +3,16 @@ import mongoose from "mongoose";
 const cotizacionSchema = mongoose.Schema(
     {
         idCotizacion: {
-            type: String,
+            type: Number,
             required: true,
-            unique: true,
-            
+            trim: true,
         },
         detail: {
             type: String,
             required: true,
-            unique: true,
             trim: true,
         },
-        imag: {
+        image: {
             type: String,
             required: true,
             trim: true,
@@ -24,47 +22,44 @@ const cotizacionSchema = mongoose.Schema(
             required: true,
             trim: true,
         },
-        
         imei: {
             type: String,
             required: true,
             unique: true,
-            trim:true,
+            trim: true,
         },
         cost:{
-            type: String,
+            type:Number,
             required: true,
             trim: true,
         },
         state:{
-            type: String,
+            type:String,
+            required: true,
+            trim: true,
+        },marca:{
+            type:String,
+            required: true,
+            trim: true,
+        },modelo:{
+            type:String,
+            required: true,
+            trim: true,
+        },descripcion:{
+            type:String,
+            required: true,
+            trim: true,
+        },precio:{
+            type:Number,
             required: true,
             trim: true,
         },
-        marca: {
-            type: String,
-            required: true,
-            trim: true
-        },
-        modelo: {
-            type: String,
-            required: true,
-            trim: true
-        },
-        descripcion: {
-            type: String,
-            required: true
-        },
-        precio: {
-            type: Number,
-            required: true
-        },
+       
     },
     {
         timestamps: true,
     }
 )
 
-// Exportacion del Schema
-const cotizacion = mongoose.model('Cotizar', cotizacionSchema);
-export default cotizacion;
+const Cotizacion = mongoose.model('Cotizacion', cotizacionSchema);
+export default Cotizacion;

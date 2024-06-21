@@ -1,11 +1,11 @@
 import { Router } from "express";
 const router = Router();
-    
-import{ modificarCarrito, registerCarrito } from "../controllers/carritocompraController.js"
 
-router.post("/registerCarrito", registerCarrito)
-router.put("/modificarRegistro", modificarCarrito)
-router.delete("/eliminarCarrito", eliminarCarrito)
+import {registerCotizacion, modificarCotizacion, eliminarCotizacion, listadoCotizacion} from "../controllers/cotizacionController.js";
 
+router.post("/registerCotizacion", registerCotizacion)
+router.put("/modificarCotizacion/:id", modificarCotizacion)
+router.delete("/eliminarCotizacion/:id", eliminarCotizacion)
+router.get("/listadoCotizacion/:id", listadoCotizacion)
 
-export default router;
+export default router;
