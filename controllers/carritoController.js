@@ -2,8 +2,11 @@ import Carrito from '../models/Carrito.js';
 
 const createCarrito = async (req, res) => {
     const carrito = new Carrito({
-        usuario: req.body.usuario,
-        productos: req.body.productos || []
+        idProduct: req.body.idProduct,
+        nameProduct: req.body.nameProduct,
+        description: req.body.description,
+        quantity:req.body.quantity,
+        price:req.body.price || []
     });
 
     try {
@@ -16,43 +19,46 @@ const createCarrito = async (req, res) => {
 
 const getCarrito = async (req, res) => {
     try {
-        const carrito = await Carrito.findOne({ usuario: req.params.usuarioId, estado: 'activo' }).populate('productos.producto');
-        if (!carrito) {
-            return res.status(404).json({ msg: 'Carrito no encontrado.' });
-        }
-        return res.status(200).json(carrito);
+        const carritos = await Carrito.find();
+        res.status(200).json(carritos);
     } catch (error) {
-        return res.status(500).json({ msg: 'Hubo un problema al obtener el carrito.' });
+        res.status(500).json({ msg: 'Hubo un problema al obtener los productos del carrito.' });
     }
 }
 
 const updateCarrito = async (req, res) => {
+    const { id } = req.params;
+    const { idProduct, nameProduct, description, quantity, price } = req.body;
     try {
-        const carrito = await Carrito.findOneAndUpdate(
-            { usuario: req.params.usuarioId, estado: 'activo' },
-            { $set: { productos: req.body.productos } },
+        const carritoActualizado = await Carrito.findByIdAndUpdate(
+            id,
+            { idProduct, nameProduct, description, quantity, price },
             { new: true }
-        ).populate('productos.producto');
+        );
 
-        if (!carrito) {
-            return res.status(404).json({ msg: 'Carrito no encontrado.' });
+        if (!carritoActualizado) {
+            return res.status(404).json({ msg: 'Producto no encontrado en el carrito.' });
         }
-        return res.status(200).json(carrito);
+
+        res.status(200).json(carritoActualizado);
     } catch (error) {
-        return res.status(500).json({ msg: 'Hubo un problema al actualizar el carrito.' });
+        res.status(500).json({ msg: 'Hubo un problema al actualizar el producto en el carrito.' });
     }
 }
 
 const deleteCarrito = async (req, res) => {
-    try {
-        const carrito = await Carrito.findOneAndDelete({ usuario: req.params.usuarioId, estado: 'activo' });
+    const { id } = req.params;
 
-        if (!carrito) {
-            return res.status(404).json({ msg: 'Carrito no encontrado.' });
+    try {
+        const carritoEliminado = await Carrito.findByIdAndDelete(id);
+
+        if (!carritoEliminado) {
+            return res.status(404).json({ msg: 'Producto no encontrado en el carrito.' });
         }
-        return res.status(200).json({ msg: 'Carrito eliminado.' });
+
+        res.status(200).json({ msg: 'Producto eliminado del carrito.' });
     } catch (error) {
-        return res.status(500).json({ msg: 'Hubo un problema al eliminar el carrito.' });
+        res.status(500).json({ msg: 'Hubo un problema al eliminar el producto del carrito.' });
     }
 }
 

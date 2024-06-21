@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const carritoSchema = moongose.Schema(
+const carritoSchema = mongoose.Schema(
     {
         idProduct:{
             type: Number,
@@ -8,12 +8,12 @@ const carritoSchema = moongose.Schema(
             trim: true,
         },
         nameProduct:{
-            type: Number,
+            type: String,
             required: true,
             trim: true,
         },
         description:{
-            type: Number,
+            type: String,
             required: true,
             trim: true,
         },
