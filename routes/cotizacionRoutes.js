@@ -1,10 +1,23 @@
 import { Router } from "express";
-const router = Router();
-
+import { CloudinaryStorage } from 'multer-storage-cloudinary'; 
+import multer from 'multer'; 
+import cloudinary from "../config/cloudinaryConfig.js";
 import { register, getCotizaciones } from "../controllers/cotizacionController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
-router.post("/register", register)
-router.get("/getCotizaciones", authMiddleware, getCotizaciones);
+const router = Router();
 
-export default router;
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'cotizaciones',
+    allowed_formats: ['jpg','jpeg', 'png', 'mp4']
+  }
+});
+
+const parser = multer({ storage: storage });
+
+router.post('/register', parser.fields([{ name: 'foto', maxCount: 1 }, { name: 'video', maxCount: 1 }]), register);
+router.get('/getCotizaciones', getCotizaciones);
+
+export default router

@@ -41,11 +41,11 @@ const cotizacionSchema = mongoose.Schema(
             required: true,
             trim: true,
         },    
-        photoUrl: {
+        foto: {
             type: String,
             trim: true,
         },
-        videoUrl: {
+        video: {
             type: String,
             trim: true,
         } 

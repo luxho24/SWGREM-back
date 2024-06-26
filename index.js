@@ -1,8 +1,6 @@
 import express from 'express';
 import dotenv from "dotenv";
 import cors from "cors";
-import multer from "multer";
-import {v2 as cloudinary} from 'cloudinary';
 import conectarDB from "./config/db.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import cotizacionRoutes from "./routes/cotizacionRoutes.js";
@@ -29,25 +27,6 @@ const dominiosPermitidos = [process.env.FRONTEND_URL];
 // };
 
 // app.use(cors(corsOptions));
-
-cloudinary.config({
-    cloud_name: 'dj8ngeoog',
-    api_key: '283229639979224',
-    api_secret: 'jUi3oUcnoXWYh8su35LERbicyoU'
-  });
-
- const upload = multer({dest:'uploads/'});
-
- app.post('/upload', upload.single('image'), async(req,res)=>{
-    try{
-        const result= await cloudinary.uploader.upload(req.file.path);
-        res.json(result);
-    }catch(error){
-        console.error(error);
-        res.status(500).json({message:'Error uploading image'});
-    }
-    
- })
 
 // Endpoints
 app.use("/api/usuarios", usuarioRoutes);

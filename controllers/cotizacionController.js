@@ -1,51 +1,30 @@
 import Cotizacion from "../models/Cotizacion.js";
 
 const register = async (req, res) => {
-    const cotizacionData = req.body;
+    try {
+        const { brand, model, selectedProblems, otherProblem, descriptionProblem, name, email, phone } = req.body;
+        const foto = req.files['foto'] ? req.files['foto'][0].path : null;
+        const video = req.files['video'] ? req.files['video'][0].path : null;
     
-    if (req.filePhoto) {
-        const photoFile = req.filePhoto;
-        const photoName = `photos/${Date.now()}_${photoFile.originalname}`;
-        const blob = bucket.file(photoName);
-
-        const blobStream = blob.createWriteStream({
-            resumable: false,
-            metadata: {
-                contentType: photoFile.mimetype
-            }
+        const nuevaCotizacion = new Cotizacion({
+          brand,
+          model,
+          selectedProblems,
+          otherProblem,
+          descriptionProblem,
+          name,
+          email,
+          phone,
+          foto,
+          video
         });
-
-        blobStream.on('error', (err) => {
-            console.error(err);
-            return res.status(500).json({ error: 'Error uploading photo' });
-        });
-
-        blobStream.on('finish', async () => {
-            const publicUrl = `https://storage.googleapis.com/${bucket.name}/${photoName}`;
-            cotizacionData.photoUrl = publicUrl;
-
-            try {
-                const cotizacion = new Cotizacion(cotizacionData);
-                const cotizacionGuardada = await cotizacion.save();
-                return res.status(200).json(cotizacionGuardada);
-            } catch (error) {
-                console.error(error);
-                return res.status(500).json({ error: 'Error saving cotizacion' });
-            }
-        });
-
-        blobStream.end(photoFile.buffer);
-    } else {
-        try {
-            const cotizacion = new Cotizacion(cotizacionData);
-            const cotizacionGuardada = await cotizacion.save();
-            return res.status(200).json(cotizacionGuardada);
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ error: 'Error saving cotizacion' });
-        }
-    }
-};
+    
+        await nuevaCotizacion.save();
+        res.status(201).json(nuevaCotizacion);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+}
 
 const getCotizaciones = async (req, res) => {
     const cotizaciones = await Cotizacion.find();
