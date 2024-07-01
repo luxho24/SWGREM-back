@@ -6,27 +6,28 @@ import usuarioRoutes from "./routes/usuarioRoutes.js";
 import cotizacionRoutes from "./routes/cotizacionRoutes.js";
 
 const app = express();
-app.use(cors({
-    origin:'http://localhost:5173'
-}))
-
-app.use(express.json())
 dotenv.config();
 conectarDB();
 
-const dominiosPermitidos = [process.env.FRONTEND_URL];
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         if (dominiosPermitidos.indexOf(origin) !== -1) {
-//             // El origen del Request esta permitido
-//             callback(null, true);
-//         } else {
-//             callback(new Error("No permitido por CORS"));
-//         }
-//     },
-// };
+app.use(express.json());
 
-// app.use(cors(corsOptions));
+const dominiosPermitidos = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173'
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || dominiosPermitidos.indexOf(origin) !== -1) {
+      // El origen del Request esta permitido
+      callback(null, true);
+    } else {
+      callback(new Error("No permitido por CORS"));
+    }
+  }
+};
+
+app.use(cors(corsOptions));
 
 // Endpoints
 app.use("/api/usuarios", usuarioRoutes);
@@ -35,5 +36,5 @@ app.use("/api/cotizaciones", cotizacionRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en: http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en: http://localhost:${PORT}`);
 });
